@@ -1,0 +1,506 @@
+/* RoServers — content.css
+   Design: "network atlas" — cartographic instrument, indigo-cast surfaces,
+   monospace data readouts, boarding-pass server cards.
+   Tokens live on .ro-overlay so everything derives from one place. */
+
+/* ---- Injected Play-row button (lives on Roblox's page, outside the popup) */
+.roservers-row-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+.roservers-play-flex { flex: 1 1 65%; min-width: 0; }
+
+.roservers-btn {
+  flex: 0 0 25%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding: 0;
+  color: #fff;
+  background: linear-gradient(135deg, #5B7CFF 0%, #3F5EFB 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.roservers-btn:hover { filter: brightness(1.08); }
+.roservers-btn:active { transform: scale(0.98); }
+.roservers-btn svg { display: block; width: 26px; height: 26px; }
+
+/* ============================== POPUP ==================================== */
+
+.ro-overlay {
+  /* Tokens */
+  --ink: #0B0E1A;        /* deepest backdrop */
+  --chart: #11152B;      /* panel surface */
+  --raised: #171C38;     /* raised surfaces (cards, chips) */
+  --meridian: #262D52;   /* hairlines, borders */
+  --signal: #5B7CFF;     /* action */
+  --signal-deep: #3F5EFB;
+  --mint: #7CE3B1;       /* ping good */
+  --amber: #FFC56F;      /* ping mid */
+  --coral: #FF7A6B;      /* ping bad */
+  --paper: #EDEFF7;      /* primary text */
+  --muted: #8A91B4;      /* secondary text, indigo cast */
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 14, 0.72);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.ro-panel {
+  display: flex;
+  width: min(1100px, 94vw);
+  height: min(720px, 88vh);
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(91, 124, 255, 0.08), transparent 60%),
+    var(--chart);
+  color: var(--paper);
+  border: 1px solid var(--meridian);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(91, 124, 255, 0.06);
+}
+
+/* ---- Left rail: the route list ---- */
+.ro-rail {
+  width: 380px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--ink);
+  border-right: 1px solid var(--meridian);
+}
+.ro-rail-head {
+  padding: 22px 24px 18px;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--meridian);
+}
+.ro-rail-body { overflow-y: auto; flex: 1; }
+.ro-rail-loading {
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.ro-group-head {
+  padding: 18px 24px 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 700;
+}
+.ro-group-head-pinned { color: var(--amber); }
+
+/* Transit-style rows: a route dot leads each city */
+.ro-city {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 24px 11px 38px;
+  cursor: pointer;
+  transition: background 0.12s ease, padding-left 0.12s ease;
+}
+.ro-city::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--meridian);
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+}
+.ro-city:hover { background: rgba(91, 124, 255, 0.07); padding-left: 42px; }
+.ro-city:hover::before {
+  background: var(--signal);
+  box-shadow: 0 0 8px rgba(91, 124, 255, 0.8);
+}
+.ro-city-empty { cursor: default; opacity: 0.38; }
+.ro-city-empty:hover { background: transparent; padding-left: 38px; }
+.ro-city-empty:hover::before { background: var(--meridian); box-shadow: none; }
+
+.ro-flag { font-size: 18px; line-height: 1; }
+.ro-city-name { flex: 1; font-size: 14.5px; min-width: 0; }
+
+.ro-count {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  color: var(--muted);
+  background: var(--raised);
+  border: 1px solid var(--meridian);
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.ro-city-pin {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  font-size: 15px;
+  line-height: 1;
+  color: #3A4068;
+  cursor: pointer;
+  padding: 2px 3px;
+  transition: color 0.12s ease, transform 0.12s ease;
+}
+.ro-city-pin:hover { color: var(--amber); transform: scale(1.15); }
+.ro-city-pin-on { color: var(--amber); }
+
+.ro-city-play {
+  width: 42px;
+  height: 28px;
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--signal);
+  background: transparent;
+  border: 1px solid var(--signal);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.ro-city-play:hover { background: var(--signal); color: #fff; }
+.ro-city-play:disabled { opacity: 0.3; cursor: default; }
+
+.ro-rail-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 24px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  border-top: 1px solid var(--meridian);
+  min-height: 18px;
+}
+.ro-spinner {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--meridian);
+  border-top-color: var(--signal);
+  border-radius: 50%;
+  animation: ro-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes ro-spin { to { transform: rotate(360deg); } }
+
+/* ---- Right pane ---- */
+.ro-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+.ro-pane-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--meridian);
+}
+.ro-pane-title { font-size: 19px; font-weight: 800; letter-spacing: -0.01em; }
+.ro-pane-close {
+  padding: 8px 18px;
+  font-size: 13px;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid var(--meridian);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.ro-pane-close:hover { border-color: var(--signal); background: rgba(91,124,255,0.08); }
+
+.ro-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  padding: 24px 26px;
+  overflow-y: auto;
+  align-content: start;
+}
+
+/* ---- Boarding-pass server cards (the signature) ---- */
+.ro-card {
+  background: var(--raised);
+  border: 1px solid var(--meridian);
+  border-radius: 14px;
+  padding: 18px 18px 0;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ro-card:hover {
+  transform: translateY(-2px);
+  border-color: #343C6E;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.ro-card-players {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  background: var(--ink);
+  border: 1px solid var(--meridian);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.ro-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 6px rgba(124, 227, 177, 0.7);
+  display: inline-block;
+}
+
+.ro-avatars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ro-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 1px solid var(--meridian);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.ro-avatar-more {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-left: 2px;
+}
+
+/* Perforated tear-line + stub */
+.ro-card-stub {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 -18px;
+  padding: 14px 18px 16px;
+  border-top: 1.5px dashed var(--meridian);
+}
+.ro-card-stub::before,
+.ro-card-stub::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--chart);          /* punch the notch out of the card */
+  border: 1px solid var(--meridian);
+}
+.ro-card-stub::before { left: -9px; clip-path: inset(0 0 0 50%); }
+.ro-card-stub::after  { right: -9px; clip-path: inset(0 50% 0 0); }
+
+.ro-card-ping {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 8px;
+  white-space: nowrap;
+  margin: 0;
+}
+.ro-ping-good { color: var(--mint);  background: rgba(124, 227, 177, 0.10); border: 1px solid rgba(124, 227, 177, 0.25); }
+.ro-ping-mid  { color: var(--amber); background: rgba(255, 197, 111, 0.10); border: 1px solid rgba(255, 197, 111, 0.25); }
+.ro-ping-bad  { color: var(--coral); background: rgba(255, 122, 107, 0.10); border: 1px solid rgba(255, 122, 107, 0.25); }
+
+.ro-card-join {
+  flex: 1;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #5B7CFF 0%, #3F5EFB 100%);
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: filter 0.12s ease, transform 0.12s ease;
+}
+.ro-card-join:hover { filter: brightness(1.08); }
+.ro-card-join:active { transform: scale(0.985); }
+.ro-card-join-pending { opacity: 0.65; }
+
+/* ---- Map empty state ---- */
+.ro-map-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px;
+}
+.ro-map-title { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; }
+.ro-map-sub { color: var(--muted); font-size: 13.5px; }
+.ro-map-svg { width: 100%; max-width: 640px; height: auto; }
+.ro-map-ocean { fill: var(--ink); stroke: var(--meridian); stroke-width: 1; }
+.ro-map-grid { stroke: #1A2040; stroke-width: 1; }
+
+.ro-pin-dot { fill: #2C3358; }
+.ro-pin-active .ro-pin-dot { fill: var(--signal); }
+.ro-pin-halo {
+  fill: var(--signal);
+  opacity: 0.35;
+  transform-origin: center;
+  animation: ro-pulse 2.4s ease-out infinite;
+}
+.ro-pin-active:hover .ro-pin-dot { fill: #fff; }
+
+@keyframes ro-pulse {
+  0%   { transform: scale(1);   opacity: 0.45; }
+  70%  { transform: scale(3.2); opacity: 0;    }
+  100% { transform: scale(3.2); opacity: 0;    }
+}
+
+/* ---- Scrollbars (Chrome-only product, so webkit styling is safe) ---- */
+.ro-rail-body::-webkit-scrollbar,
+.ro-card-grid::-webkit-scrollbar { width: 10px; }
+.ro-rail-body::-webkit-scrollbar-thumb,
+.ro-card-grid::-webkit-scrollbar-thumb {
+  background: var(--meridian);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.ro-rail-body::-webkit-scrollbar-thumb:hover,
+.ro-card-grid::-webkit-scrollbar-thumb:hover { background-color: #343C6E; }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .ro-pin-halo { animation: none; opacity: 0.3; }
+  .ro-spinner { animation: none; }
+  .ro-card, .ro-card:hover { transform: none; }
+  .ro-city, .ro-city:hover { padding-left: 38px; }
+}
+
+/* ============================ WELCOME (first run) ======================== */
+.ro-welcome-overlay {
+  --ink: #0B0E1A; --chart: #11152B; --raised: #171C38; --meridian: #262D52;
+  --signal: #5B7CFF; --signal-deep: #3F5EFB; --mint: #7CE3B1;
+  --paper: #EDEFF7; --muted: #8A91B4;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 14, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.ro-welcome-card {
+  width: min(520px, 92vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(700px 320px at 88% -12%, rgba(91, 124, 255, 0.10), transparent 60%),
+    var(--chart);
+  color: var(--paper);
+  border: 1px solid var(--meridian);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(91,124,255,0.06);
+}
+
+.ro-welcome-head {
+  padding: 26px 28px 20px;
+  border-bottom: 1px solid var(--meridian);
+}
+.ro-welcome-kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.ro-welcome-mark { color: var(--signal); display: inline-flex; }
+.ro-welcome-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ro-welcome-body { padding: 22px 28px; overflow-y: auto; }
+.ro-welcome-intro {
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.ro-welcome-features {
+  border: 1px solid var(--meridian);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ro-welcome-feature {
+  padding: 15px 18px;
+  border-top: 1px solid var(--meridian);
+}
+.ro-welcome-feature:first-child { border-top: none; }
+.ro-welcome-feature-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.ro-welcome-feature-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.ro-welcome-foot {
+  padding: 18px 28px 24px;
+  border-top: 1px solid var(--meridian);
+}
+.ro-welcome-note {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.ro-welcome-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #5B7CFF 0%, #3F5EFB 100%);
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: filter 0.12s ease, transform 0.12s ease;
+}
+.ro-welcome-btn:hover { filter: brightness(1.08); }
+.ro-welcome-btn:active { transform: scale(0.99); }

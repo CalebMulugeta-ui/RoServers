@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body {
+      width: 264px;
+      margin: 0;
+      padding: 20px;
+      background:
+        radial-gradient(420px 200px at 90% -20%, rgba(91, 124, 255, 0.12), transparent 60%),
+        #0B0E1A;
+      color: #EDEFF7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    h1 {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h1 svg { color: #5B7CFF; }
+    .sub { color: #8A91B4; font-size: 12px; margin: 0 0 14px; }
+    .hint {
+      color: #8A91B4;
+      font-size: 12px;
+      line-height: 1.55;
+      margin: 0 0 16px;
+      padding: 12px;
+      background: #11152B;
+      border: 1px solid #262D52;
+      border-radius: 10px;
+    }
+    .hint b { color: #EDEFF7; font-weight: 600; }
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #EDEFF7;
+      background: #171C38;
+      border: 1px solid #262D52;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: border-color 0.12s ease;
+    }
+    button:hover { border-color: #5B7CFF; }
+    #status {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      color: #7CE3B1;
+      font-size: 11.5px;
+      min-height: 16px;
+      margin-top: 9px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M3 12h18"></path>
+      <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"></path>
+    </svg>
+    RoServers
+  </h1>
+  <p class="sub">Choose your Roblox server by region.</p>
+  <p class="hint">Open a Roblox game and click the <b>globe button</b> next to Play. Pin favorite regions with the <b>★</b> to keep them on top.</p>
+  <button id="clear">Clear region cache</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
