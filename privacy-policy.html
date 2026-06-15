@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RoServers — Privacy Policy</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px;
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         color: #1a1a1a; line-height: 1.6; }
+  h1 { font-size: 28px; } h2 { font-size: 19px; margin-top: 32px; }
+  code { background: #f3f3f5; padding: 1px 5px; border-radius: 4px; }
+  .updated { color: #777; font-size: 14px; }
+</style>
+</head>
+<body>
+<h1>RoServers — Privacy Policy</h1>
+<p class="updated">Last updated: June 14, 2026</p>
+
+<p>RoServers is a browser extension that lets you choose which Roblox game
+server you join, based on its region and estimated ping. This policy explains
+exactly what data the extension accesses and how it is used. In plain terms:
+RoServers does not collect, store on any server, sell, or share your personal
+information. Everything it does happens locally in your browser.</p>
+
+<h2>What the extension accesses</h2>
+<p>RoServers makes network requests only to provide its core features:</p>
+<ul>
+  <li><strong>Roblox public APIs</strong> (<code>games.roblox.com</code>,
+  <code>gamejoin.roblox.com</code>, <code>thumbnails.roblox.com</code>) — to read
+  the list of public servers for the game you are viewing, determine each
+  server's region, and show player avatars. These are the same public endpoints
+  the Roblox website itself uses.</li>
+  <li><strong>Approximate location</strong> (<code>ipapi.co</code>) — to estimate
+  your ping to each server region, the extension performs a one-time lookup of
+  your approximate location based on your public IP address. Only your
+  coordinates (and city/country labels) are read; this is used purely to rank
+  regions by distance. The result is cached locally and refreshed at most once a
+  week.</li>
+</ul>
+
+<h2>What is stored, and where</h2>
+<p>RoServers uses your browser's local storage
+(<code>chrome.storage.local</code>) only. The following is stored on your own
+device and never transmitted anywhere:</p>
+<ul>
+  <li>Your approximate location result, to avoid repeated lookups.</li>
+  <li>A cache mapping Roblox server IDs to their region, so the extension does
+  not re-query the same servers.</li>
+  <li>Your pinned (favorite) regions.</li>
+  <li>A flag noting that you have seen the welcome screen.</li>
+</ul>
+<p>None of this data leaves your device. There is no RoServers account, no
+RoServers server, and no analytics or tracking.</p>
+
+<h2>What RoServers does NOT do</h2>
+<ul>
+  <li>It does not collect or store your name, email, Roblox account, or any
+  personally identifying information.</li>
+  <li>It does not sell or share any data with third parties.</li>
+  <li>It does not track your browsing across websites. It runs only on Roblox
+  game pages.</li>
+  <li>It does not run any advertising or third-party trackers.</li>
+</ul>
+
+<h2>Third-party services</h2>
+<p>The only third-party service contacted is <code>ipapi.co</code>, used solely
+for approximate IP-based location to estimate ping. Roblox endpoints are
+contacted to read public game/server data. RoServers is not affiliated with,
+endorsed by, or sponsored by Roblox Corporation.</p>
+
+<h2>Data removal</h2>
+<p>You can clear all locally stored data at any time from the extension's
+toolbar popup ("Clear region cache"), or by removing the extension, which
+deletes all of its local storage.</p>
+
+<h2>Contact</h2>
+<p>For questions about this policy, contact: <strong>calebmulugeta75@gmail.com</strong>.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, the "Last updated" date above will be revised.</p>
+</body>
+</html>
