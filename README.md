@@ -4,8 +4,6 @@
 
 RoServers is a Chrome extension that gives you control over Roblox's server matchmaking. Instead of being dropped into whatever server Roblox picks, you can browse a game's active servers grouped by real-world region, see the estimated ping and player count for each, and join a specific server directly.
 
-![RoServers region browser](submission/screenshot-1-regions.png)
-
 ---
 
 ## Features
@@ -32,71 +30,9 @@ Because Manifest V3 content scripts can't make the needed cross-origin requests,
 
 ---
 
-## Project structure
-
-```
-roservers/
-├── manifest.json        # MV3 manifest
-├── content.js           # Injects the button; bridges page-context join
-├── injector.js          # Page-context script that calls Roblox's launcher
-├── ui.js                # The two-pane region-picker popup
-├── welcome.js           # First-run onboarding screen
-├── background.js        # Service worker: fetches, DNR rule, batch resolution
-├── servers.js           # Server-list fetch + pagination
-├── resolve.js           # Single server -> IP -> region
-├── pool.js              # Throttled, cached batch resolver
-├── cache.js             # chrome.storage-backed region cache
-├── userloc.js           # Cached approximate-location lookup
-├── geo.js               # CIDR matching + distance/ping estimation
-├── regions.js           # Bundled datacenter IP ranges + coordinates
-├── content.css          # Styles (the "network atlas" design)
-├── popup.html / popup.js# Toolbar popup (clear cache, info)
-├── icons/               # Extension icons (16/48/128)
-└── *.test.js            # Node test suites (not shipped in the build)
-```
-
----
-
-## Development
-
-The non-UI modules are written to run both in the browser and under Node, so the logic is testable without a browser.
-
-```bash
-# Run a test suite
-node geo.test.js
-node servers.test.js
-node resolve.test.js
-node pool.test.js
-node cache.test.js
-node userloc.test.js
-```
-
-### Loading the extension locally
-
-1. Go to `chrome://extensions`.
-2. Enable **Developer mode** (top right).
-3. Click **Load unpacked** and select the `roservers/` folder.
-4. Open any Roblox game page and click the globe button next to Play.
-
-### Building a release zip
-
-Package the runtime files only (exclude tests and dev sources):
-
-```bash
-zip -r roservers.zip roservers -x "roservers/*.test.js" -x "roservers/submission/*" -x "roservers/*.svg"
-```
-
----
-
 ## Privacy
 
-RoServers does not collect, store on any server, sell, or share personal data. Everything runs locally:
-
-- It contacts Roblox's public endpoints to read server data and join servers.
-- It uses `ipapi.co` for a one-time, cached lookup of your approximate location, used only to estimate ping.
-- Pinned regions, the location result, and the server-region cache are stored in `chrome.storage.local` on your device.
-
-See [`submission/privacy-policy.html`](submission/privacy-policy.html) for the full policy.
+Policy: https://calebmulugeta-ui.github.io/RoServers/privacy-policy.html
 
 ---
 
@@ -113,8 +49,3 @@ See [`submission/privacy-policy.html`](submission/privacy-policy.html) for the f
 
 RoServers is an independent project and is **not affiliated with, endorsed by, or sponsored by Roblox Corporation**. "Roblox" is a trademark of Roblox Corporation.
 
----
-
-## License
-
-[Choose a license — e.g. MIT — and add a LICENSE file. See https://choosealicense.com]
