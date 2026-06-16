@@ -1,12 +1,12 @@
 # RoServers
 
-**You can download the chrome extension here**
-
-https://chromewebstore.google.com/detail/roservers/jmhpnhjmjjdkjfllcchkangimpejbljg?authuser=2&hl=en
-
 **Choose which Roblox server you join — by region and ping.**
 
 RoServers is a Chrome extension that gives you control over Roblox's server matchmaking. Instead of being dropped into whatever server Roblox picks, you can browse a game's active servers grouped by real-world region, see the estimated ping and player count for each, and join a specific server directly.
+
+**You can download the chrome extension here**
+
+https://chromewebstore.google.com/detail/roservers/jmhpnhjmjjdkjfllcchkangimpejbljg?authuser=2&hl=en
 
 ---
 
