@@ -6,7 +6,7 @@ RoServers is a Chrome extension that gives you control over Roblox's server matc
 
 **You can download the chrome extension here**
 
-https://chromewebstore.google.com/detail/roservers/jmhpnhjmjjdkjfllcchkangimpejbljg?authuser=2&hl=en
+https://chromewebstore.google.com/detail/roservers/jmhpnhjmjjdkjfllcchkangimpejbljg
 
 ---
 
